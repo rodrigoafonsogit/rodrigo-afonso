@@ -111,18 +111,37 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 .used b{display:block;font-size:17px;margin-bottom:2px}
 .used span{color:var(--mute);font-size:16px}
 
-/* L'Avenue night scene: whole page turns dark over the event photo while that role is open */
+/* Scenes: while L'Avenue or EID is open, the whole page goes dark over a themed background */
 body{transition:background-color .6s,color .6s}
-.scene{position:fixed;inset:0;z-index:-1;opacity:0;pointer-events:none;transition:opacity .7s ease;
-  background:linear-gradient(rgba(4,14,20,.66),rgba(4,14,20,.86)),url(lavenue-thumb.jpg) center 40%/cover}
+.scene{position:fixed;inset:0;z-index:-1;opacity:0;pointer-events:none;transition:opacity .7s ease;overflow:hidden}
+.scene.lavenue{background:linear-gradient(rgba(4,14,20,.66),rgba(4,14,20,.86)),url(lavenue-thumb.jpg) center 40%/cover}
+.scene.eid{background:radial-gradient(ellipse at 50% 115%,#0c3d5e 0%,#061629 55%,#030a14 100%)}
+.scene.eid::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(0deg,rgba(120,200,220,.05) 0 1px,transparent 1px 64px),
+  repeating-linear-gradient(90deg,rgba(120,200,220,.05) 0 1px,transparent 1px 64px)}
+.radar{position:absolute;width:min(78vmin,720px);aspect-ratio:1;right:6vw;top:50%;transform:translateY(-55%);border-radius:50%;
+  background:repeating-radial-gradient(circle,transparent 0 calc(12.5% - 1px),rgba(120,200,220,.22) calc(12.5% - 1px) 12.5%);
+  box-shadow:0 0 0 1px rgba(120,200,220,.3),inset 0 0 80px rgba(67,185,194,.12)}
+.radar::before,.radar::after{content:"";position:absolute;background:rgba(120,200,220,.18)}
+.radar::before{left:50%;top:0;bottom:0;width:1px}.radar::after{top:50%;left:0;right:0;height:1px}
+.sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(67,185,194,.28),rgba(67,185,194,0) 70deg,transparent 360deg);animation:spin 6s linear infinite paused}
+.blip{position:absolute;width:9px;height:9px;margin:-4px;border-radius:50%;background:#7fe3ea;box-shadow:0 0 12px #7fe3ea;opacity:0;animation:blip 4.5s ease-out infinite paused}
+.sea{position:absolute;left:0;right:0;bottom:0;width:100%;height:24vh}
+body[data-scene=eid] .sweep,body[data-scene=eid] .blip{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blip{0%,100%{opacity:0}10%{opacity:1}60%{opacity:.15}}
 body.night{--bg:#06131a;--ink:#eef4f6;--mute:#b4c4cc;--line:rgba(255,255,255,.16);--soft:rgba(255,255,255,.08);
   --acc:#43b9c2;--onacc:#06131a;--accsoft:rgba(67,185,194,.2);background:transparent;color:var(--ink)}
-body.night .scene{opacity:1}
+body[data-scene=lavenue] .scene.lavenue,body[data-scene=eid] .scene.eid{opacity:1}
 body.night nav{background:rgba(4,14,20,.6)}
 body.night footer{background:rgba(4,14,20,.8);color:#fff}
 body.night .copy{color:#fff;border-color:rgba(255,255,255,.5)}
 body.night .chip,body.night .tab[aria-selected=true]{background:rgba(255,255,255,.06)}
-@media(max-width:700px){.scene{background-image:linear-gradient(rgba(4,14,20,.66),rgba(4,14,20,.86)),url(lavenue-full.jpg)}}
+@media(max-width:700px){
+  .scene.lavenue{background-image:linear-gradient(rgba(4,14,20,.66),rgba(4,14,20,.86)),url(lavenue-full.jpg)}
+  .radar{right:50%;transform:translate(50%,-60%);width:118vw;opacity:.7}
+}
+@media(prefers-reduced-motion:reduce){.sweep,.blip{animation:none!important}.blip{opacity:.8}}
 
 /* footer */
 footer{background:var(--ink);color:var(--bg)}
@@ -154,7 +173,19 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
 </style>
 </head>
 <body>
-<div class="scene" aria-hidden="true"></div>
+<div class="scene lavenue" aria-hidden="true"></div>
+<div class="scene eid" aria-hidden="true">
+  <div class="radar"><div class="sweep"></div><i class="blip" style="left:62%;top:30%"></i><i class="blip" style="left:28%;top:58%;animation-delay:1.6s"></i><i class="blip" style="left:70%;top:68%;animation-delay:3.1s"></i></div>
+  <svg class="sea" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice">
+    <g fill="none" stroke="rgba(120,200,220,.35)" stroke-width="1.5">
+      <path d="M318 96a40 40 0 0 1 0 -56"/><path d="M304 106a58 58 0 0 1 0 -76"/><path d="M290 116a76 76 0 0 1 0 -96"/>
+      <path d="M342 96a40 40 0 0 0 0 -56"/><path d="M356 106a58 58 0 0 0 0 -76"/><path d="M370 116a76 76 0 0 0 0 -96"/>
+    </g>
+    <path fill="#030a14" d="M180 170 L196 150 L260 150 L262 128 L300 128 L306 104 L322 104 L326 66 L330 66 L332 104 L352 104 L356 128 L420 128 L426 150 L520 150 L500 170 Z"/>
+    <path fill="#030a14" d="M0 168 Q150 160 300 168 T600 168 T900 168 T1200 168 V220 H0 Z"/>
+    <path fill="none" stroke="rgba(120,200,220,.25)" d="M0 168 Q150 160 300 168 T600 168 T900 168 T1200 168"/>
+  </svg>
+</div>
 
 <nav aria-label="Main">
   <div class="wrap">
@@ -234,7 +265,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
         <div class="job-b" id="j-0"><div><ul><li>Oversee planning, operations and execution of premium events.</li><li>Delivered experiences for up to 3,000 attendees.</li><li>Responsible for logistics, supplier management and budget control.</li></ul></div></div>
       </li>
       <li class="job">
-        <button class="job-h" aria-expanded="false" aria-controls="j-1"><span class="when">2024 – 2026</span><h3>Software Engineer<span class="org">EID S.A., naval communications</span></h3><span class="plus" aria-hidden="true"></span></button>
+        <button class="job-h" aria-expanded="false" aria-controls="j-1" data-scene="eid"><span class="when">2024 – 2026</span><h3>Software Engineer<span class="org">EID S.A., naval communications</span></h3><span class="plus" aria-hidden="true"></span></button>
         <div class="job-b" id="j-1"><div><ul><li>Developed naval communication systems in C/C++ for embedded systems.</li><li>Worked with IPC, TCP/IP and other transport-layer protocols.</li></ul></div></div>
       </li>
       <li class="job">
@@ -310,10 +341,12 @@ const pick=i=>{tabs.forEach((t,j)=>{t.setAttribute("aria-selected",i===j);t.tabI
 tabs.forEach((t,i)=>{t.addEventListener("click",()=>pick(i));
   t.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){const n=(i+(e.key==="ArrowRight"?1:tabs.length-1))%tabs.length;pick(n);tabs[n].focus()}})});
 
-/* accordion */
+/* accordion + scenes: the most recently opened scene role wins */
+let stack=[];
+const setScene=()=>{const cur=stack[stack.length-1];document.body.classList.toggle("night",!!cur);if(cur)document.body.dataset.scene=cur;else delete document.body.dataset.scene};
 document.querySelectorAll("button.job-h").forEach(b=>b.addEventListener("click",()=>{
   const open=b.getAttribute("aria-expanded")!=="true";b.setAttribute("aria-expanded",open);$(b.getAttribute("aria-controls")).classList.toggle("open",open);
-  if(b.dataset.scene)document.body.classList.toggle("night",open)}));
+  if(b.dataset.scene){if(open)stack.push(b.dataset.scene);else stack=stack.filter(x=>x!==b.dataset.scene);setScene()}}));
 
 /* copy email */
 $("copy").addEventListener("click",async()=>{const b=$("copy");
