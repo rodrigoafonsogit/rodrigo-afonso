@@ -37,7 +37,7 @@ p{margin:0 0 1em;max-width:66ch}
 :focus-visible{outline:3px solid var(--acc);outline-offset:3px;border-radius:6px}
 
 /* nav */
-nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:24px;min-height:60px}
 nav .me{display:flex;align-items:center;gap:10px;font-family:"Sofia Sans Condensed",sans-serif;font-weight:800;font-size:22px;text-decoration:none;margin-right:auto;white-space:nowrap}
 nav .me img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none}
@@ -113,12 +113,12 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 
 
 /* Ambient default background: soft drifting light + dot grid */
-.ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;transition:opacity .7s}
+.ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;transition:opacity .45s;contain:strict}
 .ambient::before{content:"";position:absolute;inset:0;
   background:radial-gradient(light-dark(rgba(15,27,45,.14),rgba(232,238,243,.08)) 1px,transparent 1.6px) 0 0/24px 24px;
   -webkit-mask:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 55%,#000 100%);mask:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 55%,#000 100%)}
-.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.8;animation:drift 26s ease-in-out infinite alternate}
-.blob.b1{width:52vmax;height:52vmax;right:-14vmax;top:-18vmax;background:radial-gradient(circle,light-dark(#7fd3da,#0e5961),transparent 68%)}
+.blob{position:absolute;border-radius:50%;opacity:.8;will-change:transform;animation:drift 26s ease-in-out infinite alternate}
+.blob.b1{width:52vmax;height:52vmax;right:-14vmax;top:-18vmax;background:radial-gradient(circle,light-dark(#7fd3da,#0e5961),transparent 70%)}
 .blob.b2{width:44vmax;height:44vmax;left:-16vmax;top:38vh;background:radial-gradient(circle,light-dark(#a7bff0,#16325a),transparent 68%);animation-duration:32s;animation-delay:-8s}
 .blob.b3{width:30vmax;height:30vmax;right:8vw;bottom:-14vmax;background:radial-gradient(circle,light-dark(#b2e6dc,#0b4a4a),transparent 70%);animation-duration:38s}
 @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-6vmax,5vmax) scale(1.12)}}
@@ -126,8 +126,7 @@ body.night .ambient{opacity:0}
 @media(prefers-reduced-motion:reduce){.blob{animation:none}}
 
 /* Scenes: while L'Avenue or EID is open, the whole page goes dark over a themed background */
-body{transition:background-color .6s,color .6s}
-.scene{position:fixed;inset:0;z-index:-1;opacity:0;pointer-events:none;transition:opacity .7s ease;overflow:hidden}
+.scene{position:fixed;inset:0;z-index:-1;opacity:0;pointer-events:none;transition:opacity .45s ease;overflow:hidden;will-change:opacity;contain:strict}
 .scene.lavenue{background:linear-gradient(rgba(4,14,20,.66),rgba(4,14,20,.86)),url(lavenue-thumb.jpg) center 40%/cover}
 .scene.eid{background:radial-gradient(ellipse at 50% 115%,#0c3d5e 0%,#061629 55%,#030a14 100%)}
 .scene.eid::before{content:"";position:absolute;inset:0;background:
@@ -138,7 +137,7 @@ body{transition:background-color .6s,color .6s}
   box-shadow:0 0 0 1px rgba(120,200,220,.3),inset 0 0 80px rgba(67,185,194,.12)}
 .radar::before,.radar::after{content:"";position:absolute;background:rgba(120,200,220,.18)}
 .radar::before{left:50%;top:0;bottom:0;width:1px}.radar::after{top:50%;left:0;right:0;height:1px}
-.sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(67,185,194,.28),rgba(67,185,194,0) 70deg,transparent 360deg);animation:spin 6s linear infinite paused}
+.sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(67,185,194,.28),rgba(67,185,194,0) 70deg,transparent 360deg);will-change:transform;animation:spin 6s linear infinite paused}
 .blip{position:absolute;width:9px;height:9px;margin:-4px;border-radius:50%;background:#7fe3ea;box-shadow:0 0 12px #7fe3ea;opacity:0;animation:blip 4.5s ease-out infinite paused}
 .sea{position:absolute;left:0;right:0;bottom:0;width:100%;height:24vh}
 body[data-scene=eid] .sweep,body[data-scene=eid] .blip{animation-play-state:running}
@@ -153,7 +152,7 @@ body[data-scene=eid] .sweep,body[data-scene=eid] .blip{animation-play-state:runn
 .scene.uni{background:radial-gradient(ellipse at 30% 20%,#0d3346 0%,#061722 55%,#030b11 100%)}
 .scene.uni svg{position:absolute;inset:0;width:100%;height:100%}
 .trace{fill:none;stroke:rgba(120,200,220,.09);stroke-width:2}
-.pulse{fill:none;stroke:#7fe3ea;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:28 900;opacity:.75;filter:drop-shadow(0 0 4px #43b9c2);animation:flow 5s linear infinite paused}
+.pulse{fill:none;stroke:#7fe3ea;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:28 900;opacity:.85;animation:flow 5s linear infinite paused}
 .pad{fill:#0a2633;stroke:rgba(120,200,220,.22);stroke-width:1.5}
 .chipbox{fill:rgba(10,38,51,.35);stroke:rgba(120,200,220,.2);stroke-width:1.5}
 body[data-scene=uni] .pulse{animation-play-state:running}
@@ -393,7 +392,7 @@ show(0,0);
     paths.push([d,x,y]);
   }
   out+=paths.map(p=>`<path class="trace" d="${p[0]}"/>`).join("");
-  out+=paths.map((p,i)=>i%2?"":`<path class="pulse" d="${p[0]}" style="animation-delay:${(-r()*5).toFixed(2)}s;animation-duration:${(4+r()*3).toFixed(2)}s"/>`).join("");
+  out+=paths.map((p,i)=>i%3?"":`<path class="pulse" d="${p[0]}" style="animation-delay:${(-r()*5).toFixed(2)}s;animation-duration:${(4+r()*3).toFixed(2)}s"/>`).join("");
   out+=paths.map(p=>`<circle class="pad" cx="${Math.round(p[1])}" cy="${Math.round(p[2])}" r="5"/>`).join("");
   out+=chips.map(c=>`<rect class="chipbox" x="${c[0]}" y="${c[1]}" width="${c[2]}" height="${c[3]}" rx="6"/>`).join("");
   svg.innerHTML=out;
