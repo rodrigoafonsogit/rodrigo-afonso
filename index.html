@@ -100,6 +100,26 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 .job-b ul{margin:0 0 20px;padding-left:18px;color:var(--mute)}
 .job-b li{margin-bottom:6px}
 
+
+/* personal projects */
+.proj{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.proj h3{font-size:clamp(30px,3.4vw,40px)}
+.proj .sub{color:var(--mute);margin:8px 0 18px}
+.feat{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.feat li{border-top:1px solid var(--line);padding-top:10px;color:var(--mute);font-size:16px}
+.feat strong{display:block;color:var(--ink);font-size:17px}
+.proj .tags{margin-top:18px}
+.phone{display:flex;flex-direction:column;gap:10px;width:min(270px,100%);justify-self:center;aspect-ratio:9/17.5;padding:34px 14px 18px;border-radius:38px;text-decoration:none;color:#0f1b2d;
+  background:#f7fafb;border:9px solid #0f1b2d;box-shadow:0 30px 60px -28px rgba(15,27,45,.55);position:relative;transition:transform .35s}
+.phone:hover{transform:translateY(-6px) rotate(-1.5deg)}
+.notch{position:absolute;top:6px;left:50%;width:74px;height:16px;margin-left:-37px;border-radius:999px;background:#0f1b2d}
+.ph-title{font-family:"Sofia Sans Condensed",sans-serif;font-weight:800;font-size:22px;margin:4px 2px 2px}
+.ph-card{display:block;padding:11px 12px;border-radius:14px;background:#fff;border:1px solid #dbe3ea}
+.ph-card b{font-size:12px;color:#5a6676;font-weight:500;display:block}
+.ph-card em{font-style:normal;font-weight:700;font-size:17px;display:block;color:#0e7c86}
+.ph-card small{display:block;font-size:12px;color:#5a6676;line-height:1.4}
+@media(max-width:900px){.proj{grid-template-columns:minmax(0,1fr)}}
+
 /* skills explorer */
 .groups{display:grid;gap:22px}
 .group h3{font-size:20px;margin-bottom:10px}
@@ -223,7 +243,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
   <div class="wrap">
     <a class="me" href="#top"><img src="photo.jpg" alt=""><span>Rodrigo Afonso</span></a>
     <div class="links">
-      <a href="#thesis">Master thesis</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      <a href="#thesis">Master thesis</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
     </div>
     <a class="btn main sm" href="Rodrigo_Afonso_CV.pdf">Download CV</a>
   </div>
@@ -315,6 +335,33 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
   </div>
 </section>
 
+<section class="band" id="projects" style="padding-top:0">
+  <div class="wrap sec">
+    <div><h2>Personal projects</h2><p class="hint">Things I build outside work.</p></div>
+    <div class="proj">
+      <div class="proj-text">
+        <h3>Treino do Pai</h3>
+        <p class="sub">A workout app I built for my dad, so he can follow his weekly plan on his phone at the gym.</p>
+        <ul class="feat">
+          <li><strong>Weekly plan</strong>Push on Monday, Pull on Wednesday, Mixed on Friday.</li>
+          <li><strong>Exercise videos</strong>Up to two short videos per exercise: an explanation and my dad doing it.</li>
+          <li><strong>Progress tracking</strong>Shows last session's weight next to today's and remembers completed sets. Includes a rest timer.</li>
+          <li><strong>Simple by design</strong>No login and no backend. Everything is saved on the phone.</li>
+        </ul>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Tailwind CSS</span><span class="tag">Vercel</span></div>
+        <div class="ctas"><a class="btn main" href="https://workout-pai.vercel.app/">Open the app</a></div>
+      </div>
+      <a class="phone" href="https://workout-pai.vercel.app/" aria-label="Open Treino do Pai">
+        <span class="notch"></span>
+        <span class="ph-title">Olá! Vamos treinar?</span>
+        <span class="ph-card"><b>Segunda</b><em>Push</em><small>Peito, ombros e tríceps</small><small>6 exercícios, ~45 min</small></span>
+        <span class="ph-card"><b>Quarta</b><em>Pull</em><small>Costas e bíceps</small><small>5 exercícios, ~40 min</small></span>
+        <span class="ph-card"><b>Sexta</b><em>Misto</em><small>Push, pull e abdominais</small><small>5 exercícios, ~35 min</small></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="skills" style="padding-top:0">
   <div class="wrap sec">
     <div><h2>Skills</h2><p class="hint">Pick a skill to see where I've used it.</p></div>
@@ -355,7 +402,10 @@ const SK=[
     ["C / C++",[E],"Naval communication systems for embedded platforms."],
     ["TCP/IP and IPC",[E],"Transport-layer protocols and inter-process communication."],
     ["VHDL",[T,D],"The thesis assistant works inside a VHDL template editor."],
-    ["SQL",[],""],["FastAPI",[],""],["Docker",[],""],["JavaScript",[],""]]},
+    ["SQL",[],""],["FastAPI",[],""],["Docker",[],""],["JavaScript",[],""],
+    ["Next.js and React",["Personal project: Treino do Pai"],"Static, mobile-first web app with a page per workout."],
+    ["TypeScript",["Personal project: Treino do Pai"],"Typed workout data and app logic."],
+    ["Tailwind CSS",["Personal project: Treino do Pai"],"All of the app's styling."]]},
   {g:"Also",items:[
     ["I2C and USB",[],""],["Matlab",[],""],["OutSystems",[],""],
     ["Event operations",["Co-owner and COO at L'Avenue Experience"],"Planning, suppliers and budgets for events of up to 3,000 people."],
@@ -420,7 +470,7 @@ $("copy").addEventListener("click",async()=>{const b=$("copy");
 /* active nav link */
 const links=[...document.querySelectorAll("nav .links a")];
 const navObs=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id))}),{rootMargin:"-40% 0px -55% 0px"});
-["thesis","experience","skills","contact"].forEach(id=>navObs.observe($(id)));
+["thesis","experience","projects","skills","contact"].forEach(id=>navObs.observe($(id)));
 }
 </script>
 </body>
