@@ -7,116 +7,132 @@
 <meta name="description" content="Rodrigo Afonso: software engineer working on RAG pipelines, LLM integration and data engineering. Lisbon, Portugal.">
 <meta property="og:title" content="Rodrigo Afonso: AI and data engineering">
 <meta property="og:description" content="I build retrieval pipelines that ground LLMs in real, structured data.">
+<meta property="og:image" content="photo.jpg">
+<link rel="icon" href="photo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@500;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* VOICE: plain, confident, engineer talking to a hiring manager.
-   IDEA: an annual-report cover for one person; the chart is his own retrieval pipeline.
-   PICTURE: a live, clickable two-phase retrieval: question, section routing, chunk search, grounded answer.
-   COLOUR and TYPE: white, black, vermilion as the one signal colour; Sofia Sans Condensed 800 + Instrument Sans.
-   LAYOUT: huge name across the top, the pipeline as a full-width band, then work, experience, skills, contact. */
+/* VOICE: plain, confident, an engineer talking to a hiring manager.
+   IDEA: a clean one-person report: big name, small portrait, then things you can open and explore.
+   PICTURE: the portrait, plus interactive pieces: thesis tabs, expandable experience, a skills explorer.
+   COLOUR and TYPE: white and deep navy with a teal accent taken from the photo; Sofia Sans Condensed 800 + Instrument Sans.
+   LAYOUT: name across the top, then Master thesis, Experience, Skills, Contact. */
 :root{color-scheme:light dark;
-  --bg:light-dark(#ffffff,#120d0b);--ink:light-dark(#0a0a0a,#f4efec);--mute:light-dark(#5d5a58,#a9a19c);
-  --line:light-dark(#e4e1de,#2f2723);--soft:light-dark(#f5f3f1,#1d1613);--red:light-dark(#ff4a1c,#ff6a40);--onred:#fff}
+  --bg:light-dark(#ffffff,#0b1620);--ink:light-dark(#0f1b2d,#e8eef3);--mute:light-dark(#5a6676,#9aa8b6);
+  --line:light-dark(#e3e8ee,#1f2e3c);--soft:light-dark(#f1f5f8,#132230);
+  --acc:light-dark(#0e7c86,#43b9c2);--onacc:light-dark(#ffffff,#06131a);--accsoft:light-dark(#e3f2f3,#10333a)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:72px;scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Instrument Sans",system-ui,sans-serif;overflow-x:clip}
 a{color:inherit}
+button{font:inherit;color:inherit}
 .wrap{max-width:1240px;margin:0 auto;padding:0 max(5vw,16px)}
-.band{padding:clamp(40px,6vw,88px) 0}
+.band{padding:clamp(44px,6vw,88px) 0}
 h1,h2,h3{font-family:"Sofia Sans Condensed",sans-serif;font-weight:800;margin:0;line-height:1.05;text-wrap:balance}
 h2{font-size:clamp(32px,4vw,48px)}
-h3{font-size:24px;font-weight:800}
+h3{font-size:26px}
 p{margin:0 0 1em;max-width:66ch}
-:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px;border-radius:6px}
 
 /* nav */
 nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:24px;min-height:60px;flex-wrap:wrap}
-nav .me{font-family:"Sofia Sans Condensed";font-weight:800;font-size:22px;text-decoration:none;margin-right:auto}
-nav .links{display:flex;gap:20px;flex-wrap:wrap}
-nav .links a{text-decoration:none;color:var(--mute);font-size:15px;padding:10px 0}
-nav .links a:hover{color:var(--ink)}
+nav .wrap{display:flex;align-items:center;gap:24px;min-height:60px}
+nav .me{display:flex;align-items:center;gap:10px;font-family:"Sofia Sans Condensed",sans-serif;font-weight:800;font-size:22px;text-decoration:none;margin-right:auto;white-space:nowrap}
+nav .me img{width:30px;height:30px;border-radius:50%;object-fit:cover}
+nav .links{display:flex;gap:22px}
+nav .links a{text-decoration:none;color:var(--mute);font-size:15px;padding:10px 0;border-bottom:2px solid transparent}
+nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid var(--ink);background:transparent;cursor:pointer;white-space:nowrap}
+.btn.main{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.btn.sm{min-height:40px;padding:0 18px;font-size:15px}
+.btn:hover{filter:brightness(1.06)}
 
 /* hero */
-.hero{padding-top:clamp(36px,6vw,80px)}
-.name{font-size:clamp(72px,15vw,208px);letter-spacing:-.02em;line-height:.86;margin-left:-.04em}
-.lede{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);margin-top:clamp(24px,3vw,40px);align-items:end}
-.lede .say{font-size:clamp(22px,2.4vw,30px);line-height:1.3;font-weight:500;max-width:28ch;margin:0}
-.lede .meta{color:var(--mute);font-size:16px}
-.lede .meta p{margin:0 0 4px}
+.hero{padding-top:clamp(36px,6vw,76px);padding-bottom:clamp(20px,3vw,40px)}
+.top{display:flex;align-items:flex-end;gap:clamp(18px,3vw,40px);flex-wrap:wrap}
+.portrait{width:clamp(96px,11vw,148px);aspect-ratio:1;border-radius:50%;object-fit:cover;border:4px solid var(--bg);box-shadow:0 0 0 2px var(--acc);flex:none;margin-bottom:clamp(6px,1.4vw,22px)}
+.name{font-size:clamp(68px,14vw,196px);letter-spacing:-.02em;line-height:.86;margin-left:-.04em}
+.lede{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);margin-top:clamp(26px,3vw,44px);align-items:end}
+.say{font-size:clamp(22px,2.4vw,30px);line-height:1.3;font-weight:500;max-width:28ch;margin:0}
+.meta{color:var(--mute);font-size:16px}
+.meta p{margin:0 0 4px}
 .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid var(--ink)}
-.btn.main{background:var(--red);border-color:var(--red);color:var(--onred)}
-.btn:hover{transform:translateY(-1px)}
 
-/* pipeline figure */
-.pipe{background:var(--ink);color:var(--bg);border-radius:28px;padding:clamp(20px,3.5vw,44px);margin-top:clamp(36px,5vw,64px)}
-.pipe-head{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;align-items:end;margin-bottom:22px}
-.pipe-head h2{font-size:clamp(28px,3.2vw,40px);color:var(--bg)}
-.pipe-head p{color:color-mix(in srgb,var(--bg) 65%,var(--ink));margin:0;font-size:15px;max-width:44ch}
-.qs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
-.q{font:inherit;font-size:15px;min-height:44px;padding:8px 18px;border-radius:999px;cursor:pointer;background:transparent;color:var(--bg);border:1.5px solid color-mix(in srgb,var(--bg) 35%,var(--ink))}
-.q[aria-pressed=true]{background:var(--red);border-color:var(--red);color:var(--onred)}
-.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,28px)}
-.stage h4{margin:0 0 12px;font-size:14px;font-weight:500;color:color-mix(in srgb,var(--bg) 60%,var(--ink))}
-.stage h4 b{color:var(--bg);font-weight:600}
-.row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;margin-bottom:8px;font-size:15px;
-  background:color-mix(in srgb,var(--bg) 7%,var(--ink));color:color-mix(in srgb,var(--bg) 70%,var(--ink));transition:background .35s,color .35s,opacity .35s}
-.row .s{font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
-.row.dim{opacity:.38}
-.row.hit{background:var(--red);color:var(--onred)}
-.answer{border-radius:16px;padding:18px;background:var(--bg);color:var(--ink);min-height:208px;font-size:15px;line-height:1.55}
-.answer .src{display:block;margin-top:12px;font-size:13px;color:var(--mute)}
-.answer.wait{opacity:.35}
-.pipe .note{margin:20px 0 0;font-size:13px;color:color-mix(in srgb,var(--bg) 55%,var(--ink));max-width:none}
+/* section frame */
+.sec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:clamp(20px,4vw,64px);padding-top:26px;position:relative}
+.sec::before{content:"";position:absolute;top:0;left:max(5vw,16px);right:max(5vw,16px);height:2px;background:var(--ink)}
+.sec .hint{color:var(--mute);font-size:15px;margin-top:10px}
 
-/* sections */
-.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:clamp(20px,4vw,64px);padding-top:24px;position:relative}
-.sec-head::before{content:"";position:absolute;top:0;left:max(5vw,16px);right:max(5vw,16px);height:2px;background:var(--ink)}
-.points{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 36px}
-.points li{border-top:1px solid var(--line);padding-top:14px}
-.points strong{display:block;font-size:18px;margin-bottom:4px}
-.points span{color:var(--mute);font-size:16px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 30px}
-.tag{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--soft)}
+/* thesis */
+.thesis h3{font-size:clamp(30px,3.4vw,40px)}
+.thesis .sub{color:var(--mute);margin:8px 0 20px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;padding:5px;background:var(--soft);border-radius:999px;width:fit-content;max-width:100%}
+.tab{border:0;background:transparent;border-radius:999px;min-height:42px;padding:0 18px;cursor:pointer;font-size:15px;font-weight:500;color:var(--mute)}
+.tab[aria-selected=true]{background:var(--bg);color:var(--ink);box-shadow:0 1px 0 var(--line),0 0 0 1px var(--line)}
+.panel{padding:24px 0 4px}
+.panel[hidden]{display:none}
+.panel ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px}
+.panel li{border-top:1px solid var(--line);padding-top:12px;color:var(--mute);font-size:16px}
+.panel li strong{display:block;color:var(--ink);font-size:18px;margin-bottom:2px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--accsoft);color:var(--ink)}
 
-.jobs{list-style:none;margin:0;padding:0}
-.job{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:8px 32px;padding:22px 0;border-bottom:1px solid var(--line)}
-.job:first-child{padding-top:0}
+/* experience accordion */
+.jobs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.job{border-bottom:1px solid var(--line)}
+.job-h{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) 28px;gap:4px 28px;align-items:center;width:100%;text-align:left;background:none;border:0;padding:20px 0;cursor:pointer}
+.job-h.static{cursor:default}
 .when{color:var(--mute);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.job h3{font-size:26px}
-.job .org{color:var(--mute);margin:2px 0 8px;font-size:16px}
-.job p{margin:0}
+.job-h h3{font-size:25px}
+.org{display:block;color:var(--mute);font-size:16px;font-family:"Instrument Sans",system-ui,sans-serif;font-weight:400;margin-top:2px}
+.plus{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);position:relative;justify-self:end}
+.plus::before,.plus::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%);transition:transform .25s}
+.plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+.job-h[aria-expanded=true] .plus{border-color:var(--acc)}
+.job-h[aria-expanded=true] .plus::after{transform:translate(-50%,-50%) rotate(0)}
+.job-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}
+.job-b>div{overflow:hidden;padding-left:calc(150px + 28px)}
+.job-b.open{grid-template-rows:1fr}
+.job-b ul{margin:0 0 20px;padding-left:18px;color:var(--mute)}
+.job-b li{margin-bottom:6px}
 
-.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.skills h3{font-size:22px;margin-bottom:10px}
-.skills ul{list-style:none;padding:0;margin:0}
-.skills li{padding:7px 0;border-bottom:1px solid var(--line);font-size:16px}
+/* skills explorer */
+.groups{display:grid;gap:22px}
+.group h3{font-size:20px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;min-height:40px;padding:0 15px;cursor:pointer;font-size:15px}
+.chip:hover{border-color:var(--acc)}
+.chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.used{margin-top:26px;padding:18px 20px;border-radius:16px;background:var(--soft);min-height:84px}
+.used b{display:block;font-size:17px;margin-bottom:2px}
+.used span{color:var(--mute);font-size:16px}
 
-footer{background:var(--red);color:var(--onred)}
-footer .wrap{padding-top:clamp(44px,6vw,88px);padding-bottom:clamp(36px,4vw,56px)}
-footer h2{font-size:clamp(44px,8vw,104px);line-height:.92;color:var(--onred);max-width:12ch}
-.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:40px;border-top:1.5px solid rgba(255,255,255,.5);padding-top:20px}
-.contact span{display:block;font-size:14px;opacity:.8}
+/* footer */
+footer{background:var(--ink);color:var(--bg)}
+footer .wrap{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(36px,4vw,56px)}
+footer h2{font-size:clamp(44px,7.5vw,96px);line-height:.92;max-width:13ch}
+.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:40px;border-top:1px solid color-mix(in srgb,var(--bg) 30%,var(--ink));padding-top:22px}
+.contact span{display:block;font-size:14px;opacity:.7}
 .contact a{font-size:18px;font-weight:600;text-decoration:none;overflow-wrap:anywhere}
 .contact a:hover{text-decoration:underline}
-footer small{display:block;margin-top:44px;opacity:.75;font-size:13px}
+.copy{margin-top:10px;border:1.5px solid color-mix(in srgb,var(--bg) 45%,var(--ink));background:transparent;color:var(--bg);border-radius:999px;min-height:40px;padding:0 16px;cursor:pointer;font-size:14px}
+.copy.done{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
 
 @media(max-width:900px){
-  .lede,.sec-head{grid-template-columns:minmax(0,1fr)}
-  .stages{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-  .stage.out{grid-column:1/-1}
-  .skills{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .lede,.sec{grid-template-columns:minmax(0,1fr)}
+  nav .links{gap:16px}
 }
 @media(max-width:600px){
   body{font-size:16px}
   nav .links{display:none}
-  .stages,.points,.skills,.contact{grid-template-columns:minmax(0,1fr)}
-  .job{grid-template-columns:minmax(0,1fr)}
-  .answer{min-height:0}
+  .panel ul,.contact{grid-template-columns:minmax(0,1fr)}
+  .job-h{grid-template-columns:minmax(0,1fr) 28px}
+  .job-h .when{grid-column:1/-1;order:-1}
+  .job-b>div{padding-left:0}
+  .tabs{border-radius:18px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -125,16 +141,19 @@ footer small{display:block;margin-top:44px;opacity:.75;font-size:13px}
 
 <nav aria-label="Main">
   <div class="wrap">
-    <a class="me" href="#top">Rodrigo Afonso</a>
+    <a class="me" href="#top"><img src="photo.jpg" alt="">Rodrigo Afonso</a>
     <div class="links">
-      <a href="#work">Work</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      <a href="#thesis">Master thesis</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
     </div>
-    <a class="btn main" href="Rodrigo_Afonso_CV.pdf" style="min-height:40px;padding:0 18px;font-size:15px">Download CV</a>
+    <a class="btn main sm" href="Rodrigo_Afonso_CV.pdf">Download CV</a>
   </div>
 </nav>
 
 <header class="hero wrap" id="top">
-  <h1 class="name">Rodrigo<br>Afonso</h1>
+  <div class="top">
+    <img class="portrait" src="photo.jpg" alt="Portrait of Rodrigo Afonso">
+    <h1 class="name">Rodrigo<br>Afonso</h1>
+  </div>
   <div class="lede">
     <p class="say">I build retrieval pipelines that ground LLMs in real, structured data, and the engineering around them that makes the answers trustworthy.</p>
     <div class="meta">
@@ -147,59 +166,77 @@ footer small{display:block;margin-top:44px;opacity:.75;font-size:13px}
       </div>
     </div>
   </div>
-
-  <section class="pipe" aria-labelledby="pipe-title">
-    <div class="pipe-head">
-      <h2 id="pipe-title">How my RAG assistant finds an answer</h2>
-      <p>Pick a question. Phase one routes it to the right section of the documentation; phase two searches only the chunks inside that section.</p>
-    </div>
-    <div class="qs" role="group" aria-label="Example questions" id="qs"></div>
-    <div class="stages">
-      <div class="stage"><h4><b>Phase 1</b> Section routing</h4><div id="secs"></div></div>
-      <div class="stage"><h4><b>Phase 2</b> Chunk search in that section</h4><div id="chunks"></div></div>
-      <div class="stage out"><h4><b>Grounded answer</b> from an open-weight LLM</h4><div class="answer" id="ans" aria-live="polite"></div></div>
-    </div>
-    <p class="note">Simplified, illustrative view of the NOVA-HDL-Assist pipeline. Scores and answers are example values.</p>
-  </section>
 </header>
 
 <main>
-<section class="band" id="work">
-  <div class="wrap sec-head">
-    <div><h2>Selected work</h2></div>
-    <div>
-      <h3 style="font-size:34px">NOVA-HDL-Assist</h3>
-      <p style="color:var(--mute);margin-top:6px">Master's dissertation. A RAG assistant inside a web-based VHDL template editor, so engineers can ask questions and configure modules in plain language.</p>
+<section class="band" id="thesis">
+  <div class="wrap sec">
+    <div><h2>Master thesis</h2><p class="hint">Switch tabs to see each part of the project.</p></div>
+    <div class="thesis">
+      <h3>NOVA-HDL-Assist</h3>
+      <p class="sub">A RAG assistant inside a web-based VHDL template editor, so engineers can ask questions and configure modules in plain language.</p>
+      <div class="tabs" role="tablist" aria-label="Thesis details">
+        <button class="tab" role="tab" id="t-0" aria-controls="p-0" aria-selected="true">Overview</button>
+        <button class="tab" role="tab" id="t-1" aria-controls="p-1" aria-selected="false" tabindex="-1">Retrieval</button>
+        <button class="tab" role="tab" id="t-2" aria-controls="p-2" aria-selected="false" tabindex="-1">Evaluation</button>
+      </div>
+      <div class="panel" role="tabpanel" id="p-0" aria-labelledby="t-0">
+        <ul>
+          <li><strong>The goal</strong>Give an existing VHDL template editor an assistant that answers from the project's own documentation, not from guesses.</li>
+          <li><strong>The stack</strong>Python and Flask for the backend, ChromaDB as the vector store, open-weight LLMs for answer generation.</li>
+          <li><strong>Grounded answers</strong>A hybrid policy uses the retrieved context first and only falls back on general model knowledge when retrieval is thin.</li>
+          <li><strong>Integrated, not bolted on</strong>The assistant lives inside the editor, next to the templates engineers are already configuring.</li>
+        </ul>
+      </div>
+      <div class="panel" role="tabpanel" id="p-1" aria-labelledby="t-1" hidden>
+        <ul>
+          <li><strong>Two-phase retrieval</strong>Section-level routing first, then chunk-level search, so the model only sees context from the part of the docs that matters.</li>
+          <li><strong>Two-collection vector store</strong>Separate ChromaDB collections for sections and chunks.</li>
+          <li><strong>Asymmetric embeddings</strong>Queries and documents are embedded differently, matching short questions to longer technical passages.</li>
+          <li><strong>Structure-aware chunking</strong>Chunks follow the document's own structure instead of a fixed sliding window.</li>
+        </ul>
+      </div>
+      <div class="panel" role="tabpanel" id="p-2" aria-labelledby="t-2" hidden>
+        <ul>
+          <li><strong>LLM-as-judge</strong>An evaluation workflow where a model scores answers, used to compare configurations consistently.</li>
+          <li><strong>Hyperparameter calibration</strong>Retrieval settings were tuned against that evaluation rather than picked by hand.</li>
+          <li><strong>Chunking result</strong>Structure-aware chunking outperformed naive sliding-window chunking.</li>
+        </ul>
+      </div>
       <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">ChromaDB</span><span class="tag">Embeddings</span><span class="tag">Open-weight LLMs</span><span class="tag">LLM-as-judge</span></div>
-      <ul class="points">
-        <li><strong>Two-phase retrieval</strong><span>Section-level routing first, then chunk-level search, so the model only sees context from the part of the docs that matters.</span></li>
-        <li><strong>Two-collection vector store</strong><span>ChromaDB with separate section and chunk collections, and asymmetric embeddings for queries and documents.</span></li>
-        <li><strong>Structure-aware chunking</strong><span>Chunks follow the document's own structure. It outperformed naive sliding-window chunking.</span></li>
-        <li><strong>Measured, not guessed</strong><span>Hyperparameters calibrated with an LLM-as-judge evaluation workflow, plus a hybrid policy that falls back on general model knowledge when retrieval is thin.</span></li>
-      </ul>
     </div>
   </div>
 </section>
 
 <section class="band" id="experience" style="padding-top:0">
-  <div class="wrap sec-head">
-    <div><h2>Experience</h2></div>
+  <div class="wrap sec">
+    <div><h2>Experience</h2><p class="hint">Open a role for the details.</p></div>
     <ol class="jobs">
-      <li class="job"><div class="when">2025 – now</div><div><h3>Co-owner and COO</h3><div class="org">L'Avenue Experience, Lisbon</div><p>Planning and running premium events for up to 3,000 attendees: operations, logistics, suppliers and budget.</p></div></li>
-      <li class="job"><div class="when">2024 – 2026</div><div><h3>Software Engineer</h3><div class="org">EID S.A., naval communications</div><p>Built naval communication systems in C/C++ for embedded platforms, using IPC, TCP/IP and other transport-layer protocols.</p></div></li>
-      <li class="job"><div class="when">2021</div><div><h3>Quality Engineer intern</h3><div class="org">Exact Systems Group</div></div></li>
-      <li class="job"><div class="when">2019 – 2026</div><div><h3>Integrated Master's, Electrotechnical and Computer Engineering</h3><div class="org">NOVA School of Science and Technology, with an Erasmus semester at the Università degli Studi di Palermo</div></div></li>
+      <li class="job">
+        <button class="job-h" aria-expanded="false" aria-controls="j-0"><span class="when">2025 – now</span><h3>Co-owner and COO<span class="org">L'Avenue Experience, Lisbon</span></h3><span class="plus" aria-hidden="true"></span></button>
+        <div class="job-b" id="j-0"><div><ul><li>Oversee planning, operations and execution of premium events.</li><li>Delivered experiences for up to 3,000 attendees.</li><li>Responsible for logistics, supplier management and budget control.</li></ul></div></div>
+      </li>
+      <li class="job">
+        <button class="job-h" aria-expanded="false" aria-controls="j-1"><span class="when">2024 – 2026</span><h3>Software Engineer<span class="org">EID S.A., naval communications</span></h3><span class="plus" aria-hidden="true"></span></button>
+        <div class="job-b" id="j-1"><div><ul><li>Developed naval communication systems in C/C++ for embedded systems.</li><li>Worked with IPC, TCP/IP and other transport-layer protocols.</li></ul></div></div>
+      </li>
+      <li class="job">
+        <div class="job-h static"><span class="when">2021</span><h3>Quality Engineer intern<span class="org">Exact Systems Group</span></h3><span></span></div>
+      </li>
+      <li class="job">
+        <button class="job-h" aria-expanded="false" aria-controls="j-3"><span class="when">2019 – 2026</span><h3>Integrated Master's, Electrotechnical and Computer Engineering<span class="org">NOVA School of Science and Technology</span></h3><span class="plus" aria-hidden="true"></span></button>
+        <div class="job-b" id="j-3"><div><ul><li>Dissertation: NOVA-HDL-Assist, a RAG assistant for VHDL editing.</li><li>Erasmus semester at the Università degli Studi di Palermo, working on projects with people from different countries and fields.</li></ul></div></div>
+      </li>
     </ol>
   </div>
 </section>
 
 <section class="band" id="skills" style="padding-top:0">
-  <div class="wrap sec-head">
-    <div><h2>Skills</h2></div>
-    <div class="skills">
-      <div><h3>AI and data</h3><ul><li>RAG pipelines</li><li>LLM integration and prompting</li><li>Vector databases (ChromaDB)</li><li>Embeddings</li><li>LLM-as-judge evaluation</li></ul></div>
-      <div><h3>Engineering</h3><ul><li>Python, SQL</li><li>C, C++</li><li>JavaScript, VHDL</li><li>Flask, FastAPI</li><li>Docker</li></ul></div>
-      <div><h3>Also</h3><ul><li>TCP/IP, I2C, USB</li><li>Matlab, OutSystems</li><li>English and Portuguese</li><li>Team and supplier coordination</li></ul></div>
+  <div class="wrap sec">
+    <div><h2>Skills</h2><p class="hint">Pick a skill to see where I've used it.</p></div>
+    <div>
+      <div class="groups" id="groups"></div>
+      <div class="used" id="used" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -209,7 +246,7 @@ footer small{display:block;margin-top:44px;opacity:.75;font-size:13px}
   <div class="wrap">
     <h2>Let's talk about your data and your LLMs.</h2>
     <div class="contact">
-      <div><span>Email</span><a href="mailto:rodrigoafonso.profissional@gmail.com">rodrigoafonso.profissional@gmail.com</a></div>
+      <div><span>Email</span><a href="mailto:rodrigoafonso.profissional@gmail.com">rodrigoafonso.profissional@gmail.com</a><br><button class="copy" id="copy" type="button">Copy email</button></div>
       <div><span>Phone</span><a href="tel:+351915043950">+351 915 043 950</a></div>
       <div><span>LinkedIn</span><a href="https://www.linkedin.com/in/rodrigo-miguel-afonso">rodrigo-miguel-afonso</a></div>
     </div>
@@ -219,36 +256,57 @@ footer small{display:block;margin-top:44px;opacity:.75;font-size:13px}
 
 <script>
 {
-const SECS=["Generics and ports","FIFO buffer","UART interface","Clock and reset"];
-const DATA=[
-  {q:"How do I change the FIFO depth?",sec:1,ss:[.41,.88,.22,.31],
-   ch:["DEPTH generic and its range","Full and empty flags","Read/write pointer width","Almost-full threshold"],cs:[.91,.47,.63,.38],hit:0,
-   a:"Set the DEPTH generic when you instantiate the FIFO. It must be a power of two, and the pointer width is derived from it, so you don't need to change anything else.",src:"FIFO buffer, chunk: DEPTH generic and its range"},
-  {q:"What baud rates does the UART support?",sec:2,ss:[.29,.18,.86,.34],
-   ch:["Baud rate divisor","Parity options","TX/RX state machine","Oversampling factor"],cs:[.89,.33,.41,.66],hit:0,
-   a:"The baud rate comes from a divisor of the system clock, set through the CLK_FREQ and BAUD generics. Common rates like 9600 and 115200 work as long as the divisor stays an integer.",src:"UART interface, chunk: Baud rate divisor"},
-  {q:"Is the reset synchronous?",sec:3,ss:[.36,.21,.27,.84],
-   ch:["Reset polarity","Synchronous vs asynchronous reset","Clock enable","Reset synchroniser"],cs:[.52,.9,.24,.61],hit:1,
-   a:"Yes. The template uses a synchronous, active-high reset. If your board provides an asynchronous reset, pass it through the included two-flop synchroniser first.",src:"Clock and reset, chunk: Synchronous vs asynchronous reset"}
+const T="Master thesis (NOVA-HDL-Assist)",E="Software Engineer at EID",D="Degree at NOVA FCT";
+const SK=[
+  {g:"AI and data",items:[
+    ["RAG pipelines",[T],"Designed a hierarchical two-phase retrieval pipeline."],
+    ["LLM integration",[T],"Integrated open-weight LLMs for answer generation, with a hybrid retrieval policy."],
+    ["Prompt engineering",[T],"Used together with LLM integration in the thesis assistant."],
+    ["ChromaDB",[T],"Two-collection vector store for sections and chunks."],
+    ["Embeddings",[T],"Asymmetric query and document embeddings."],
+    ["LLM-as-judge",[T],"Evaluation workflow used for hyperparameter calibration."]]},
+  {g:"Engineering",items:[
+    ["Python",[T],"Retrieval backend, chunking pipeline and evaluation."],
+    ["Flask",[T],"Backend API for the assistant."],
+    ["C / C++",[E],"Naval communication systems for embedded platforms."],
+    ["TCP/IP and IPC",[E],"Transport-layer protocols and inter-process communication."],
+    ["VHDL",[T,D],"The thesis assistant works inside a VHDL template editor."],
+    ["SQL",[],""],["FastAPI",[],""],["Docker",[],""],["JavaScript",[],""]]},
+  {g:"Also",items:[
+    ["I2C and USB",[],""],["Matlab",[],""],["OutSystems",[],""],
+    ["Event operations",["Co-owner and COO at L'Avenue Experience"],"Planning, suppliers and budgets for events of up to 3,000 people."],
+    ["English and Portuguese",[],"Proficient in both."]]}
 ];
 const $=id=>document.getElementById(id);
-const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-const rows=(names,scores,cls)=>names.map((n,i)=>`<div class="row ${cls?cls(i):""}"><span>${n}</span><span class="s">${scores?scores[i].toFixed(2):"&nbsp;"}</span></div>`).join("");
-let timers=[];
-const run=k=>{
-  timers.forEach(clearTimeout);timers=[];
-  const d=DATA[k];
-  document.querySelectorAll(".q").forEach((b,i)=>b.setAttribute("aria-pressed",i===k));
-  $("secs").innerHTML=rows(SECS,null);$("chunks").innerHTML=rows(d.ch,null,()=>"dim");
-  $("ans").className="answer wait";$("ans").innerHTML="Waiting for retrieval…";
-  const t=reduce?0:1;
-  timers.push(setTimeout(()=>{$("secs").innerHTML=rows(SECS,d.ss,i=>i===d.sec?"hit":"dim")},350*t));
-  timers.push(setTimeout(()=>{$("chunks").innerHTML=rows(d.ch,d.cs,i=>i===d.hit?"hit":"dim")},1100*t));
-  timers.push(setTimeout(()=>{$("ans").className="answer";$("ans").innerHTML=`${d.a}<span class="src">Source: ${d.src}</span>`},1800*t));
+$("groups").innerHTML=SK.map((g,gi)=>`<div class="group"><h3>${g.g}</h3><div class="chips">${g.items.map((s,si)=>`<button type="button" class="chip" aria-pressed="false" data-k="${gi}-${si}">${s[0]}</button>`).join("")}</div></div>`).join("");
+const show=(gi,si)=>{
+  const s=SK[gi].items[si];
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.k===`${gi}-${si}`));
+  $("used").innerHTML=s[1].length?`<b>${s[1].join(" and ")}</b><span>${s[2]}</span>`:`<b>${s[0]}</b><span>${s[2]||"Part of my toolkit. Happy to talk about how I've used it."}</span>`;
 };
-$("qs").innerHTML=DATA.map((d,i)=>`<button class="q" type="button" aria-pressed="false" data-i="${i}">${d.q}</button>`).join("");
-$("qs").addEventListener("click",e=>{const b=e.target.closest(".q");if(b)run(+b.dataset.i)});
-run(0);
+$("groups").addEventListener("click",e=>{const c=e.target.closest(".chip");if(c){const[g,s]=c.dataset.k.split("-").map(Number);show(g,s)}});
+show(0,0);
+
+/* tabs */
+const tabs=[...document.querySelectorAll(".tab")];
+const pick=i=>{tabs.forEach((t,j)=>{t.setAttribute("aria-selected",i===j);t.tabIndex=i===j?0:-1;$("p-"+j).hidden=i!==j})};
+tabs.forEach((t,i)=>{t.addEventListener("click",()=>pick(i));
+  t.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){const n=(i+(e.key==="ArrowRight"?1:tabs.length-1))%tabs.length;pick(n);tabs[n].focus()}})});
+
+/* accordion */
+document.querySelectorAll("button.job-h").forEach(b=>b.addEventListener("click",()=>{
+  const open=b.getAttribute("aria-expanded")!=="true";b.setAttribute("aria-expanded",open);$(b.getAttribute("aria-controls")).classList.toggle("open",open)}));
+
+/* copy email */
+$("copy").addEventListener("click",async()=>{const b=$("copy");
+  try{await navigator.clipboard.writeText("rodrigoafonso.profissional@gmail.com");b.textContent="Email copied";b.classList.add("done")}
+  catch(e){b.textContent="Copy failed, use the link above"}
+  setTimeout(()=>{b.textContent="Copy email";b.classList.remove("done")},2200)});
+
+/* active nav link */
+const links=[...document.querySelectorAll("nav .links a")];
+const navObs=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id))}),{rootMargin:"-40% 0px -55% 0px"});
+["thesis","experience","skills","contact"].forEach(id=>navObs.observe($(id)));
 }
 </script>
 </body>
