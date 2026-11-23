@@ -130,11 +130,28 @@ body{transition:background-color .6s,color .6s}
 body[data-scene=eid] .sweep,body[data-scene=eid] .blip{animation-play-state:running}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes blip{0%,100%{opacity:0}10%{opacity:1}60%{opacity:.15}}
+.erasmus{display:flex;gap:16px;align-items:flex-start;margin:4px 0 22px;padding:18px 20px;border-radius:16px;background:var(--accsoft);border:1px solid color-mix(in srgb,var(--acc) 35%,transparent)}
+.erasmus .it{display:flex;flex:none;width:36px;height:24px;border-radius:4px;overflow:hidden;margin-top:3px;box-shadow:0 0 0 1px var(--line)}
+.erasmus .it i{flex:1}.erasmus .it i:nth-child(1){background:#009246}.erasmus .it i:nth-child(2){background:#f1f2f1}.erasmus .it i:nth-child(3){background:#ce2b37}
+.erasmus b{display:block;font-size:19px}
+.erasmus .where{display:block;color:var(--mute);margin-bottom:6px}
+.erasmus p{margin:0;font-size:16px}
+.scene.uni{background:radial-gradient(ellipse at 30% 20%,#0d3346 0%,#061722 55%,#030b11 100%)}
+.scene.uni svg{position:absolute;inset:0;width:100%;height:100%}
+.trace{fill:none;stroke:rgba(120,200,220,.09);stroke-width:2}
+.pulse{fill:none;stroke:#7fe3ea;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:28 900;opacity:.75;filter:drop-shadow(0 0 4px #43b9c2);animation:flow 5s linear infinite paused}
+.pad{fill:#0a2633;stroke:rgba(120,200,220,.22);stroke-width:1.5}
+.chipbox{fill:rgba(10,38,51,.35);stroke:rgba(120,200,220,.2);stroke-width:1.5}
+body[data-scene=uni] .pulse{animation-play-state:running}
+@keyframes flow{from{stroke-dashoffset:928}to{stroke-dashoffset:0}}
+body[data-scene=uni] .scene.uni{opacity:1}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none!important;stroke-dasharray:none;opacity:.35}}
 body.night{--bg:#06131a;--ink:#eef4f6;--mute:#b4c4cc;--line:rgba(255,255,255,.16);--soft:rgba(255,255,255,.08);
   --acc:#43b9c2;--onacc:#06131a;--accsoft:rgba(67,185,194,.2);background:transparent;color:var(--ink)}
 body[data-scene=lavenue] .scene.lavenue,body[data-scene=eid] .scene.eid{opacity:1}
 body.night nav{background:rgba(4,14,20,.6)}
 body.night footer{background:rgba(4,14,20,.8);color:#fff}
+body.night .erasmus{background:rgba(6,19,26,.88)}
 body.night .copy{color:#fff;border-color:rgba(255,255,255,.5)}
 body.night .chip,body.night .tab[aria-selected=true]{background:rgba(255,255,255,.06)}
 @media(max-width:700px){
@@ -174,6 +191,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
 </head>
 <body>
 <div class="scene lavenue" aria-hidden="true"></div>
+<div class="scene uni" aria-hidden="true"><svg id="circuit" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"></svg></div>
 <div class="scene eid" aria-hidden="true">
   <div class="radar"><div class="sweep"></div><i class="blip" style="left:62%;top:30%"></i><i class="blip" style="left:28%;top:58%;animation-delay:1.6s"></i><i class="blip" style="left:70%;top:68%;animation-delay:3.1s"></i></div>
   <svg class="sea" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice">
@@ -207,6 +225,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
     <div class="meta">
       <p>Software engineer moving into AI and data engineering</p>
       <p>MSc Electrotechnical and Computer Engineering, NOVA FCT</p>
+      <p>Erasmus semester in Palermo, Italy</p>
       <p>Lisbon, Portugal</p>
       <div class="ctas">
         <a class="btn main" href="Rodrigo_Afonso_CV.pdf">Download CV</a>
@@ -272,8 +291,11 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
         <div class="job-h static"><span class="when">2021</span><h3>Quality Engineer intern<span class="org">Exact Systems Group</span></h3><span></span></div>
       </li>
       <li class="job">
-        <button class="job-h" aria-expanded="false" aria-controls="j-3"><span class="when">2019 – 2026</span><h3>Integrated Master's, Electrotechnical and Computer Engineering<span class="org">NOVA School of Science and Technology</span></h3><span class="plus" aria-hidden="true"></span></button>
-        <div class="job-b" id="j-3"><div><ul><li>Dissertation: NOVA-HDL-Assist, a RAG assistant for VHDL editing.</li><li>Erasmus semester at the Università degli Studi di Palermo, working on projects with people from different countries and fields.</li></ul></div></div>
+        <button class="job-h" aria-expanded="false" aria-controls="j-3" data-scene="uni"><span class="when">2019 – 2026</span><h3>Integrated Master's, Electrotechnical and Computer Engineering<span class="org">NOVA School of Science and Technology, with an Erasmus semester in Palermo, Italy</span></h3><span class="plus" aria-hidden="true"></span></button>
+        <div class="job-b" id="j-3"><div>
+          <ul><li>Dissertation: NOVA-HDL-Assist, a RAG assistant for VHDL editing.</li></ul>
+          <div class="erasmus"><span class="it" aria-hidden="true"><i></i><i></i><i></i></span><div><b>Erasmus exchange semester</b><span class="where">Università degli Studi di Palermo, Italy</span><p>Worked on projects with students from different countries and academic fields. It taught me to adapt fast and solve problems creatively with people who think differently.</p></div></div>
+        </div></div>
       </li>
     </ol>
   </div>
@@ -334,6 +356,33 @@ const show=(gi,si)=>{
 };
 $("groups").addEventListener("click",e=>{const c=e.target.closest(".chip");if(c){const[g,s]=c.dataset.k.split("-").map(Number);show(g,s)}});
 show(0,0);
+
+
+/* circuit board for the degree scene (deterministic) */
+{
+  let seed=7;const r=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  const svg=$("circuit");let out="";
+  const chips=[[520,330,160,120],[200,560,110,80],[880,140,120,90],[930,560,130,90]];
+  const paths=[];
+  for(let i=0;i<34;i++){
+    const c=chips[i%chips.length];const side=Math.floor(r()*4);
+    let x=c[0]+(side===1?c[2]:side===3?0:20+r()*(c[2]-40)),y=c[1]+(side===2?c[3]:side===0?0:20+r()*(c[3]-40));
+    x=Math.round(x/10)*10;y=Math.round(y/10)*10;
+    let d=`M${x} ${y}`;const dx=side===1?1:side===3?-1:0,dy=side===2?1:side===0?-1:0;
+    let L=60+r()*120;x+=dx*L;y+=dy*L;d+=` L${Math.round(x)} ${Math.round(y)}`;
+    const turn=r()<.5?1:-1;const L2=80+r()*260;
+    if(dx){x+=L2*(r()<.3?0:1)*0;y+=turn*L2}else{x+=turn*L2}
+    d+=` L${Math.round(x)} ${Math.round(y)}`;
+    const L3=60+r()*220;if(dx)x+=dx*L3;else y+=dy*L3;
+    d+=` L${Math.round(x)} ${Math.round(y)}`;
+    paths.push([d,x,y]);
+  }
+  out+=paths.map(p=>`<path class="trace" d="${p[0]}"/>`).join("");
+  out+=paths.map((p,i)=>i%2?"":`<path class="pulse" d="${p[0]}" style="animation-delay:${(-r()*5).toFixed(2)}s;animation-duration:${(4+r()*3).toFixed(2)}s"/>`).join("");
+  out+=paths.map(p=>`<circle class="pad" cx="${Math.round(p[1])}" cy="${Math.round(p[2])}" r="5"/>`).join("");
+  out+=chips.map(c=>`<rect class="chipbox" x="${c[0]}" y="${c[1]}" width="${c[2]}" height="${c[3]}" rx="6"/>`).join("");
+  svg.innerHTML=out;
+}
 
 /* tabs */
 const tabs=[...document.querySelectorAll(".tab")];
