@@ -153,7 +153,7 @@ body.night nav{background:rgba(4,14,20,.6)}
 body.night footer{background:rgba(4,14,20,.8);color:#fff}
 body.night .erasmus{background:rgba(6,19,26,.88)}
 body.night .copy{color:#fff;border-color:rgba(255,255,255,.5)}
-body.night .chip,body.night .tab[aria-selected=true]{background:rgba(255,255,255,.06)}
+body.night .chip:not([aria-pressed=true]),body.night .tab[aria-selected=true]{background:rgba(255,255,255,.06)}
 @media(max-width:700px){
   .scene.lavenue{background-image:linear-gradient(rgba(4,14,20,.66),rgba(4,14,20,.86)),url(lavenue-full.jpg)}
   .radar{right:50%;transform:translate(50%,-60%);width:118vw;opacity:.7}
