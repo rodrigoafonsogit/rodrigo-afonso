@@ -243,7 +243,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
   <div class="wrap">
     <a class="me" href="#top"><img src="photo.jpg" alt=""><span>Rodrigo Afonso</span></a>
     <div class="links">
-      <a href="#thesis">Master thesis</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      <a href="#thesis">Master thesis</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
     </div>
     <a class="btn main sm" href="Rodrigo_Afonso_CV.pdf">Download CV</a>
   </div>
@@ -335,6 +335,15 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
   </div>
 </section>
 
+<section class="band" id="skills" style="padding-top:0">
+  <div class="wrap sec">
+    <div><h2>Skills</h2><p class="hint">Pick a skill to see where I've used it.</p></div>
+    <div>
+      <div class="groups" id="groups"></div>
+      <div class="used" id="used" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
 <section class="band" id="projects" style="padding-top:0">
   <div class="wrap sec">
     <div><h2>Personal projects</h2><p class="hint">Things I build outside work.</p></div>
@@ -358,16 +367,6 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
         <span class="ph-card"><b>Quarta</b><em>Pull</em><small>Costas e bíceps</small><small>5 exercícios, ~40 min</small></span>
         <span class="ph-card"><b>Sexta</b><em>Misto</em><small>Push, pull e abdominais</small><small>5 exercícios, ~35 min</small></span>
       </a>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="skills" style="padding-top:0">
-  <div class="wrap sec">
-    <div><h2>Skills</h2><p class="hint">Pick a skill to see where I've used it.</p></div>
-    <div>
-      <div class="groups" id="groups"></div>
-      <div class="used" id="used" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -470,7 +469,7 @@ $("copy").addEventListener("click",async()=>{const b=$("copy");
 /* active nav link */
 const links=[...document.querySelectorAll("nav .links a")];
 const navObs=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id))}),{rootMargin:"-40% 0px -55% 0px"});
-["thesis","experience","projects","skills","contact"].forEach(id=>navObs.observe($(id)));
+["thesis","experience","skills","projects","contact"].forEach(id=>navObs.observe($(id)));
 }
 </script>
 </body>
