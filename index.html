@@ -19,8 +19,8 @@
    COLOUR and TYPE: white and deep navy with a teal accent taken from the photo; Sofia Sans Condensed 800 + Instrument Sans.
    LAYOUT: name across the top, then Master thesis, Experience, Skills, Contact. */
 :root{color-scheme:light dark;
-  --bg:light-dark(#ffffff,#0b1620);--ink:light-dark(#0f1b2d,#e8eef3);--mute:light-dark(#5a6676,#9aa8b6);
-  --line:light-dark(#e3e8ee,#1f2e3c);--soft:light-dark(#f1f5f8,#132230);
+  --bg:light-dark(#f4f7f9,#0b1620);--ink:light-dark(#0f1b2d,#e8eef3);--mute:light-dark(#5a6676,#9aa8b6);
+  --line:light-dark(#dbe3ea,#1f2e3c);--soft:light-dark(rgba(255,255,255,.75),#132230);
   --acc:light-dark(#0e7c86,#43b9c2);--onacc:light-dark(#ffffff,#06131a);--accsoft:light-dark(#e3f2f3,#10333a)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
@@ -111,6 +111,20 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 .used b{display:block;font-size:17px;margin-bottom:2px}
 .used span{color:var(--mute);font-size:16px}
 
+
+/* Ambient default background: soft drifting light + dot grid */
+.ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;transition:opacity .7s}
+.ambient::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(light-dark(rgba(15,27,45,.14),rgba(232,238,243,.08)) 1px,transparent 1.6px) 0 0/24px 24px;
+  -webkit-mask:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 55%,#000 100%);mask:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 55%,#000 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.8;animation:drift 26s ease-in-out infinite alternate}
+.blob.b1{width:52vmax;height:52vmax;right:-14vmax;top:-18vmax;background:radial-gradient(circle,light-dark(#7fd3da,#0e5961),transparent 68%)}
+.blob.b2{width:44vmax;height:44vmax;left:-16vmax;top:38vh;background:radial-gradient(circle,light-dark(#a7bff0,#16325a),transparent 68%);animation-duration:32s;animation-delay:-8s}
+.blob.b3{width:30vmax;height:30vmax;right:8vw;bottom:-14vmax;background:radial-gradient(circle,light-dark(#b2e6dc,#0b4a4a),transparent 70%);animation-duration:38s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-6vmax,5vmax) scale(1.12)}}
+body.night .ambient{opacity:0}
+@media(prefers-reduced-motion:reduce){.blob{animation:none}}
+
 /* Scenes: while L'Avenue or EID is open, the whole page goes dark over a themed background */
 body{transition:background-color .6s,color .6s}
 .scene{position:fixed;inset:0;z-index:-1;opacity:0;pointer-events:none;transition:opacity .7s ease;overflow:hidden}
@@ -190,6 +204,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
 </style>
 </head>
 <body>
+<div class="ambient" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
 <div class="scene lavenue" aria-hidden="true"></div>
 <div class="scene uni" aria-hidden="true"><svg id="circuit" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"></svg></div>
 <div class="scene eid" aria-hidden="true">
