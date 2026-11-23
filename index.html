@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rodrigo Afonso</title>
+<meta name="description" content="Rodrigo Afonso: software engineer working on RAG pipelines, LLM integration and data engineering. Lisbon, Portugal.">
+<meta property="og:title" content="Rodrigo Afonso: AI and data engineering">
+<meta property="og:description" content="I build retrieval pipelines that ground LLMs in real, structured data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@500;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: plain, confident, engineer talking to a hiring manager.
+   IDEA: an annual-report cover for one person; the chart is his own retrieval pipeline.
+   PICTURE: a live, clickable two-phase retrieval: question, section routing, chunk search, grounded answer.
+   COLOUR and TYPE: white, black, vermilion as the one signal colour; Sofia Sans Condensed 800 + Instrument Sans.
+   LAYOUT: huge name across the top, the pipeline as a full-width band, then work, experience, skills, contact. */
+:root{color-scheme:light dark;
+  --bg:light-dark(#ffffff,#120d0b);--ink:light-dark(#0a0a0a,#f4efec);--mute:light-dark(#5d5a58,#a9a19c);
+  --line:light-dark(#e4e1de,#2f2723);--soft:light-dark(#f5f3f1,#1d1613);--red:light-dark(#ff4a1c,#ff6a40);--onred:#fff}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Instrument Sans",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(5vw,16px)}
+.band{padding:clamp(40px,6vw,88px) 0}
+h1,h2,h3{font-family:"Sofia Sans Condensed",sans-serif;font-weight:800;margin:0;line-height:1.05;text-wrap:balance}
+h2{font-size:clamp(32px,4vw,48px)}
+h3{font-size:24px;font-weight:800}
+p{margin:0 0 1em;max-width:66ch}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:24px;min-height:60px;flex-wrap:wrap}
+nav .me{font-family:"Sofia Sans Condensed";font-weight:800;font-size:22px;text-decoration:none;margin-right:auto}
+nav .links{display:flex;gap:20px;flex-wrap:wrap}
+nav .links a{text-decoration:none;color:var(--mute);font-size:15px;padding:10px 0}
+nav .links a:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding-top:clamp(36px,6vw,80px)}
+.name{font-size:clamp(72px,15vw,208px);letter-spacing:-.02em;line-height:.86;margin-left:-.04em}
+.lede{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);margin-top:clamp(24px,3vw,40px);align-items:end}
+.lede .say{font-size:clamp(22px,2.4vw,30px);line-height:1.3;font-weight:500;max-width:28ch;margin:0}
+.lede .meta{color:var(--mute);font-size:16px}
+.lede .meta p{margin:0 0 4px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid var(--ink)}
+.btn.main{background:var(--red);border-color:var(--red);color:var(--onred)}
+.btn:hover{transform:translateY(-1px)}
+
+/* pipeline figure */
+.pipe{background:var(--ink);color:var(--bg);border-radius:28px;padding:clamp(20px,3.5vw,44px);margin-top:clamp(36px,5vw,64px)}
+.pipe-head{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;align-items:end;margin-bottom:22px}
+.pipe-head h2{font-size:clamp(28px,3.2vw,40px);color:var(--bg)}
+.pipe-head p{color:color-mix(in srgb,var(--bg) 65%,var(--ink));margin:0;font-size:15px;max-width:44ch}
+.qs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.q{font:inherit;font-size:15px;min-height:44px;padding:8px 18px;border-radius:999px;cursor:pointer;background:transparent;color:var(--bg);border:1.5px solid color-mix(in srgb,var(--bg) 35%,var(--ink))}
+.q[aria-pressed=true]{background:var(--red);border-color:var(--red);color:var(--onred)}
+.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,28px)}
+.stage h4{margin:0 0 12px;font-size:14px;font-weight:500;color:color-mix(in srgb,var(--bg) 60%,var(--ink))}
+.stage h4 b{color:var(--bg);font-weight:600}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;margin-bottom:8px;font-size:15px;
+  background:color-mix(in srgb,var(--bg) 7%,var(--ink));color:color-mix(in srgb,var(--bg) 70%,var(--ink));transition:background .35s,color .35s,opacity .35s}
+.row .s{font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
+.row.dim{opacity:.38}
+.row.hit{background:var(--red);color:var(--onred)}
+.answer{border-radius:16px;padding:18px;background:var(--bg);color:var(--ink);min-height:208px;font-size:15px;line-height:1.55}
+.answer .src{display:block;margin-top:12px;font-size:13px;color:var(--mute)}
+.answer.wait{opacity:.35}
+.pipe .note{margin:20px 0 0;font-size:13px;color:color-mix(in srgb,var(--bg) 55%,var(--ink));max-width:none}
+
+/* sections */
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:clamp(20px,4vw,64px);padding-top:24px;position:relative}
+.sec-head::before{content:"";position:absolute;top:0;left:max(5vw,16px);right:max(5vw,16px);height:2px;background:var(--ink)}
+.points{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 36px}
+.points li{border-top:1px solid var(--line);padding-top:14px}
+.points strong{display:block;font-size:18px;margin-bottom:4px}
+.points span{color:var(--mute);font-size:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 30px}
+.tag{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--soft)}
+
+.jobs{list-style:none;margin:0;padding:0}
+.job{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:8px 32px;padding:22px 0;border-bottom:1px solid var(--line)}
+.job:first-child{padding-top:0}
+.when{color:var(--mute);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.job h3{font-size:26px}
+.job .org{color:var(--mute);margin:2px 0 8px;font-size:16px}
+.job p{margin:0}
+
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.skills h3{font-size:22px;margin-bottom:10px}
+.skills ul{list-style:none;padding:0;margin:0}
+.skills li{padding:7px 0;border-bottom:1px solid var(--line);font-size:16px}
+
+footer{background:var(--red);color:var(--onred)}
+footer .wrap{padding-top:clamp(44px,6vw,88px);padding-bottom:clamp(36px,4vw,56px)}
+footer h2{font-size:clamp(44px,8vw,104px);line-height:.92;color:var(--onred);max-width:12ch}
+.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:40px;border-top:1.5px solid rgba(255,255,255,.5);padding-top:20px}
+.contact span{display:block;font-size:14px;opacity:.8}
+.contact a{font-size:18px;font-weight:600;text-decoration:none;overflow-wrap:anywhere}
+.contact a:hover{text-decoration:underline}
+footer small{display:block;margin-top:44px;opacity:.75;font-size:13px}
+
+@media(max-width:900px){
+  .lede,.sec-head{grid-template-columns:minmax(0,1fr)}
+  .stages{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .stage.out{grid-column:1/-1}
+  .skills{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+@media(max-width:600px){
+  body{font-size:16px}
+  nav .links{display:none}
+  .stages,.points,.skills,.contact{grid-template-columns:minmax(0,1fr)}
+  .job{grid-template-columns:minmax(0,1fr)}
+  .answer{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="me" href="#top">Rodrigo Afonso</a>
+    <div class="links">
+      <a href="#work">Work</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+    </div>
+    <a class="btn main" href="Rodrigo_Afonso_CV.pdf" style="min-height:40px;padding:0 18px;font-size:15px">Download CV</a>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <h1 class="name">Rodrigo<br>Afonso</h1>
+  <div class="lede">
+    <p class="say">I build retrieval pipelines that ground LLMs in real, structured data, and the engineering around them that makes the answers trustworthy.</p>
+    <div class="meta">
+      <p>Software engineer moving into AI and data engineering</p>
+      <p>MSc Electrotechnical and Computer Engineering, NOVA FCT</p>
+      <p>Lisbon, Portugal</p>
+      <div class="ctas">
+        <a class="btn main" href="Rodrigo_Afonso_CV.pdf">Download CV</a>
+        <a class="btn" href="https://www.linkedin.com/in/rodrigo-miguel-afonso">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="pipe" aria-labelledby="pipe-title">
+    <div class="pipe-head">
+      <h2 id="pipe-title">How my RAG assistant finds an answer</h2>
+      <p>Pick a question. Phase one routes it to the right section of the documentation; phase two searches only the chunks inside that section.</p>
+    </div>
+    <div class="qs" role="group" aria-label="Example questions" id="qs"></div>
+    <div class="stages">
+      <div class="stage"><h4><b>Phase 1</b> Section routing</h4><div id="secs"></div></div>
+      <div class="stage"><h4><b>Phase 2</b> Chunk search in that section</h4><div id="chunks"></div></div>
+      <div class="stage out"><h4><b>Grounded answer</b> from an open-weight LLM</h4><div class="answer" id="ans" aria-live="polite"></div></div>
+    </div>
+    <p class="note">Simplified, illustrative view of the NOVA-HDL-Assist pipeline. Scores and answers are example values.</p>
+  </section>
+</header>
+
+<main>
+<section class="band" id="work">
+  <div class="wrap sec-head">
+    <div><h2>Selected work</h2></div>
+    <div>
+      <h3 style="font-size:34px">NOVA-HDL-Assist</h3>
+      <p style="color:var(--mute);margin-top:6px">Master's dissertation. A RAG assistant inside a web-based VHDL template editor, so engineers can ask questions and configure modules in plain language.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">ChromaDB</span><span class="tag">Embeddings</span><span class="tag">Open-weight LLMs</span><span class="tag">LLM-as-judge</span></div>
+      <ul class="points">
+        <li><strong>Two-phase retrieval</strong><span>Section-level routing first, then chunk-level search, so the model only sees context from the part of the docs that matters.</span></li>
+        <li><strong>Two-collection vector store</strong><span>ChromaDB with separate section and chunk collections, and asymmetric embeddings for queries and documents.</span></li>
+        <li><strong>Structure-aware chunking</strong><span>Chunks follow the document's own structure. It outperformed naive sliding-window chunking.</span></li>
+        <li><strong>Measured, not guessed</strong><span>Hyperparameters calibrated with an LLM-as-judge evaluation workflow, plus a hybrid policy that falls back on general model knowledge when retrieval is thin.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="experience" style="padding-top:0">
+  <div class="wrap sec-head">
+    <div><h2>Experience</h2></div>
+    <ol class="jobs">
+      <li class="job"><div class="when">2025 – now</div><div><h3>Co-owner and COO</h3><div class="org">L'Avenue Experience, Lisbon</div><p>Planning and running premium events for up to 3,000 attendees: operations, logistics, suppliers and budget.</p></div></li>
+      <li class="job"><div class="when">2024 – 2026</div><div><h3>Software Engineer</h3><div class="org">EID S.A., naval communications</div><p>Built naval communication systems in C/C++ for embedded platforms, using IPC, TCP/IP and other transport-layer protocols.</p></div></li>
+      <li class="job"><div class="when">2021</div><div><h3>Quality Engineer intern</h3><div class="org">Exact Systems Group</div></div></li>
+      <li class="job"><div class="when">2019 – 2026</div><div><h3>Integrated Master's, Electrotechnical and Computer Engineering</h3><div class="org">NOVA School of Science and Technology, with an Erasmus semester at the Università degli Studi di Palermo</div></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="skills" style="padding-top:0">
+  <div class="wrap sec-head">
+    <div><h2>Skills</h2></div>
+    <div class="skills">
+      <div><h3>AI and data</h3><ul><li>RAG pipelines</li><li>LLM integration and prompting</li><li>Vector databases (ChromaDB)</li><li>Embeddings</li><li>LLM-as-judge evaluation</li></ul></div>
+      <div><h3>Engineering</h3><ul><li>Python, SQL</li><li>C, C++</li><li>JavaScript, VHDL</li><li>Flask, FastAPI</li><li>Docker</li></ul></div>
+      <div><h3>Also</h3><ul><li>TCP/IP, I2C, USB</li><li>Matlab, OutSystems</li><li>English and Portuguese</li><li>Team and supplier coordination</li></ul></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk about your data and your LLMs.</h2>
+    <div class="contact">
+      <div><span>Email</span><a href="mailto:rodrigoafonso.profissional@gmail.com">rodrigoafonso.profissional@gmail.com</a></div>
+      <div><span>Phone</span><a href="tel:+351915043950">+351 915 043 950</a></div>
+      <div><span>LinkedIn</span><a href="https://www.linkedin.com/in/rodrigo-miguel-afonso">rodrigo-miguel-afonso</a></div>
+    </div>
+    <small>Rodrigo Afonso, Lisbon, 2026</small>
+  </div>
+</footer>
+
+<script>
+{
+const SECS=["Generics and ports","FIFO buffer","UART interface","Clock and reset"];
+const DATA=[
+  {q:"How do I change the FIFO depth?",sec:1,ss:[.41,.88,.22,.31],
+   ch:["DEPTH generic and its range","Full and empty flags","Read/write pointer width","Almost-full threshold"],cs:[.91,.47,.63,.38],hit:0,
+   a:"Set the DEPTH generic when you instantiate the FIFO. It must be a power of two, and the pointer width is derived from it, so you don't need to change anything else.",src:"FIFO buffer, chunk: DEPTH generic and its range"},
+  {q:"What baud rates does the UART support?",sec:2,ss:[.29,.18,.86,.34],
+   ch:["Baud rate divisor","Parity options","TX/RX state machine","Oversampling factor"],cs:[.89,.33,.41,.66],hit:0,
+   a:"The baud rate comes from a divisor of the system clock, set through the CLK_FREQ and BAUD generics. Common rates like 9600 and 115200 work as long as the divisor stays an integer.",src:"UART interface, chunk: Baud rate divisor"},
+  {q:"Is the reset synchronous?",sec:3,ss:[.36,.21,.27,.84],
+   ch:["Reset polarity","Synchronous vs asynchronous reset","Clock enable","Reset synchroniser"],cs:[.52,.9,.24,.61],hit:1,
+   a:"Yes. The template uses a synchronous, active-high reset. If your board provides an asynchronous reset, pass it through the included two-flop synchroniser first.",src:"Clock and reset, chunk: Synchronous vs asynchronous reset"}
+];
+const $=id=>document.getElementById(id);
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rows=(names,scores,cls)=>names.map((n,i)=>`<div class="row ${cls?cls(i):""}"><span>${n}</span><span class="s">${scores?scores[i].toFixed(2):"&nbsp;"}</span></div>`).join("");
+let timers=[];
+const run=k=>{
+  timers.forEach(clearTimeout);timers=[];
+  const d=DATA[k];
+  document.querySelectorAll(".q").forEach((b,i)=>b.setAttribute("aria-pressed",i===k));
+  $("secs").innerHTML=rows(SECS,null);$("chunks").innerHTML=rows(d.ch,null,()=>"dim");
+  $("ans").className="answer wait";$("ans").innerHTML="Waiting for retrieval…";
+  const t=reduce?0:1;
+  timers.push(setTimeout(()=>{$("secs").innerHTML=rows(SECS,d.ss,i=>i===d.sec?"hit":"dim")},350*t));
+  timers.push(setTimeout(()=>{$("chunks").innerHTML=rows(d.ch,d.cs,i=>i===d.hit?"hit":"dim")},1100*t));
+  timers.push(setTimeout(()=>{$("ans").className="answer";$("ans").innerHTML=`${d.a}<span class="src">Source: ${d.src}</span>`},1800*t));
+};
+$("qs").innerHTML=DATA.map((d,i)=>`<button class="q" type="button" aria-pressed="false" data-i="${i}">${d.q}</button>`).join("");
+$("qs").addEventListener("click",e=>{const b=e.target.closest(".q");if(b)run(+b.dataset.i)});
+run(0);
+}
+</script>
+</body>
+</html>
