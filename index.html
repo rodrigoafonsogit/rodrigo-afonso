@@ -179,10 +179,24 @@ body[data-scene=uni] .pulse{animation-play-state:running}
 @keyframes flow{from{stroke-dashoffset:928}to{stroke-dashoffset:0}}
 body[data-scene=uni] .scene.uni{opacity:1}
 @media(prefers-reduced-motion:reduce){.pulse{animation:none!important;stroke-dasharray:none;opacity:.35}}
+.scene.exact{background:radial-gradient(ellipse at 50% 100%,#123338 0%,#081a1e 50%,#040d10 100%)}
+.scene.exact::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(120,200,220,.04) 0 1px,transparent 1px 80px)}
+.spc{position:absolute;left:0;right:0;top:14vh;width:100%;height:30vh;opacity:.7}
+.belt{position:absolute;left:0;right:0;bottom:5vh;opacity:.6;height:64px;border-top:2px solid rgba(120,200,220,.35);border-bottom:2px solid rgba(120,200,220,.2);
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,transparent 2px 28px)}
+.gate{position:absolute;left:62%;top:-120px;bottom:-12px;width:46px;margin-left:-23px;border:2px solid rgba(120,200,220,.4);border-bottom:0;border-radius:10px 10px 0 0}
+.gate::after{content:"";position:absolute;left:50%;top:14px;bottom:0;width:2px;margin-left:-1px;background:#7fe3ea;box-shadow:0 0 14px 3px rgba(67,185,194,.5);opacity:.7}
+.part{position:absolute;left:0;bottom:12px;width:44px;height:34px;border-radius:6px;background:rgba(127,227,234,.18);border:1.5px solid rgba(127,227,234,.55);
+  will-change:transform;animation:convey 14s linear infinite paused}
+@keyframes convey{from{transform:translateX(-80px)}to{transform:translateX(calc(100vw + 80px))}}
+body[data-scene=exact] .part{animation-play-state:running}
+body[data-scene=exact] .scene.exact{opacity:1}
+@media(max-width:700px){.gate{left:70%}.spc{top:10vh;height:24vh}}
+@media(prefers-reduced-motion:reduce){.part{animation:none!important}.part:nth-of-type(2){transform:translateX(20vw)}.part:nth-of-type(3){transform:translateX(45vw)}.part:nth-of-type(4){transform:translateX(75vw)}}
 body.night{--bg:#06131a;--ink:#eef4f6;--mute:#b4c4cc;--line:rgba(255,255,255,.16);--soft:rgba(255,255,255,.08);
   --acc:#43b9c2;--onacc:#06131a;--accsoft:rgba(67,185,194,.2);background:transparent;color:var(--ink)}
 body[data-scene=lavenue] .scene.lavenue,body[data-scene=eid] .scene.eid{opacity:1}
-body.night nav{background:rgba(4,14,20,.6)}
+body.night nav{background:rgba(4,14,20,.97)}
 body.night footer{background:rgba(4,14,20,.8);color:#fff}
 body.night .erasmus{background:rgba(6,19,26,.88)}
 body.night .copy{color:#fff;border-color:rgba(255,255,255,.5)}
@@ -226,6 +240,18 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
 <div class="ambient" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
 <div class="scene lavenue" aria-hidden="true"></div>
 <div class="scene uni" aria-hidden="true"><svg id="circuit" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"></svg></div>
+<div class="scene exact" aria-hidden="true">
+  <svg class="spc" viewBox="0 0 1200 300" preserveAspectRatio="none">
+    <rect x="0" y="95" width="1200" height="110" fill="rgba(67,185,194,.06)"/>
+    <line x1="0" y1="95" x2="1200" y2="95" stroke="rgba(120,200,220,.35)" stroke-dasharray="8 8"/>
+    <line x1="0" y1="205" x2="1200" y2="205" stroke="rgba(120,200,220,.35)" stroke-dasharray="8 8"/>
+    <line x1="0" y1="150" x2="1200" y2="150" stroke="rgba(120,200,220,.22)"/>
+    <polyline fill="none" stroke="rgba(127,227,234,.35)" stroke-width="2" points="0,160 60,138 120,171 180,148 240,129 300,162 360,176 420,141 480,152 540,120 600,158 660,183 720,146 780,135 840,166 900,150 960,124 1020,170 1080,143 1140,157 1200,139"/>
+  </svg>
+  <div class="belt"><div class="gate"></div>
+    <i class="part" style="animation-delay:0s"></i><i class="part" style="animation-delay:-1.75s"></i><i class="part" style="animation-delay:-3.5s"></i><i class="part" style="animation-delay:-5.25s"></i><i class="part" style="animation-delay:-7s"></i><i class="part" style="animation-delay:-8.75s"></i><i class="part" style="animation-delay:-10.5s"></i><i class="part" style="animation-delay:-12.25s"></i>
+  </div>
+</div>
 <div class="scene eid" aria-hidden="true">
   <div class="radar"><div class="sweep"></div><i class="blip" style="left:62%;top:30%"></i><i class="blip" style="left:28%;top:58%;animation-delay:1.6s"></i><i class="blip" style="left:70%;top:68%;animation-delay:3.1s"></i></div>
   <svg class="sea" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice">
@@ -322,7 +348,8 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
         <div class="job-b" id="j-1"><div><ul><li>Developed naval communication systems in C/C++ for embedded systems.</li><li>Worked with IPC, TCP/IP and other transport-layer protocols.</li></ul></div></div>
       </li>
       <li class="job">
-        <div class="job-h static"><span class="when">2021</span><h3>Quality Engineer intern<span class="org">Exact Systems Group</span></h3><span></span></div>
+        <button class="job-h" aria-expanded="false" aria-controls="j-2" data-scene="exact"><span class="when">Feb – Mar 2021</span><h3>Quality Engineer intern<span class="org">Exact Systems Group</span></h3><span class="plus" aria-hidden="true"></span></button>
+        <div class="job-b" id="j-2"><div><ul><li>Provided resident engineering services, supporting the client's local representative.</li><li>Helped coordinate with suppliers and product recipients to keep operations running smoothly.</li><li>Learned how clear communication and collaboration reduce the risk of product damage.</li><li>Contributed to significant cost savings by cutting sorting and rework expenses.</li></ul></div></div>
       </li>
       <li class="job">
         <button class="job-h" aria-expanded="false" aria-controls="j-3" data-scene="uni"><span class="when">2019 – 2026</span><h3>Integrated Master's, Electrotechnical and Computer Engineering<span class="org">NOVA School of Science and Technology, with an Erasmus semester in Palermo, Italy</span></h3><span class="plus" aria-hidden="true"></span></button>
