@@ -95,6 +95,8 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 .job-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}
 .job-b>div{overflow:hidden;padding-left:calc(150px + 28px)}
 .job-b.open{grid-template-rows:1fr}
+.job-b>div{visibility:hidden;transition:visibility 0s .3s}
+.job-b.open>div{visibility:visible;transition:none}
 .job-b ul{margin:0 0 20px;padding-left:18px;color:var(--mute)}
 .job-b li{margin-bottom:6px}
 
@@ -108,6 +110,21 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 .used{margin-top:26px;padding:18px 20px;border-radius:16px;background:var(--soft);min-height:84px}
 .used b{display:block;font-size:17px;margin-bottom:2px}
 .used span{color:var(--mute);font-size:16px}
+
+
+/* event photo */
+.shot{margin:0 0 22px}
+.shot-btn{display:block;position:relative;width:100%;max-width:620px;padding:0;border:0;border-radius:16px;overflow:hidden;cursor:zoom-in;background:var(--soft)}
+.shot-btn img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .5s}
+.shot-btn:hover img{transform:scale(1.03)}
+.zoom{position:absolute;right:12px;bottom:12px;font-size:13px;padding:5px 12px;border-radius:999px;background:rgba(6,19,26,.72);color:#fff}
+.shot figcaption{margin-top:8px;font-size:14px;color:var(--mute)}
+.job-b .shot{opacity:0;transform:translateY(8px);transition:opacity .35s .1s,transform .35s .1s}
+.job-b.open .shot{opacity:1;transform:none}
+.lb{border:0;padding:0;background:transparent;max-width:min(1400px,94vw);max-height:92vh;overflow:visible}
+.lb::backdrop{background:rgba(6,12,20,.86)}
+.lb img{display:block;max-width:100%;max-height:86vh;border-radius:14px}
+.lb-x{position:absolute;top:-52px;right:0;min-height:42px;padding:0 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,.6);background:rgba(6,19,26,.6);color:#fff;cursor:pointer;font-size:15px}
 
 /* footer */
 footer{background:var(--ink);color:var(--bg)}
@@ -215,7 +232,9 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
     <ol class="jobs">
       <li class="job">
         <button class="job-h" aria-expanded="false" aria-controls="j-0"><span class="when">2025 – now</span><h3>Co-owner and COO<span class="org">L'Avenue Experience, Lisbon</span></h3><span class="plus" aria-hidden="true"></span></button>
-        <div class="job-b" id="j-0"><div><ul><li>Oversee planning, operations and execution of premium events.</li><li>Delivered experiences for up to 3,000 attendees.</li><li>Responsible for logistics, supplier management and budget control.</li></ul></div></div>
+        <div class="job-b" id="j-0"><div><ul><li>Oversee planning, operations and execution of premium events.</li><li>Delivered experiences for up to 3,000 attendees.</li><li>Responsible for logistics, supplier management and budget control.</li></ul>
+          <figure class="shot"><button type="button" class="shot-btn" id="shot-open" aria-label="Enlarge photo of a L'Avenue Experience event"><img src="lavenue.jpg" alt="A packed L'Avenue Experience event in Lisbon: a DJ booth surrounded by the crowd under stone arches, lit in blue" loading="lazy"><span class="zoom">Enlarge photo</span></button><figcaption>L'Avenue Experience, Lisbon</figcaption></figure>
+        </div></div>
       </li>
       <li class="job">
         <button class="job-h" aria-expanded="false" aria-controls="j-1"><span class="when">2024 – 2026</span><h3>Software Engineer<span class="org">EID S.A., naval communications</span></h3><span class="plus" aria-hidden="true"></span></button>
@@ -242,6 +261,11 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
   </div>
 </section>
 </main>
+
+<dialog class="lb" id="lb" aria-label="L'Avenue Experience photo">
+  <img src="lavenue.jpg" alt="A packed L'Avenue Experience event in Lisbon: a DJ booth surrounded by the crowd under stone arches, lit in blue">
+  <button type="button" class="lb-x" id="lb-x">Close</button>
+</dialog>
 
 <footer id="contact">
   <div class="wrap">
@@ -296,7 +320,14 @@ tabs.forEach((t,i)=>{t.addEventListener("click",()=>pick(i));
 
 /* accordion */
 document.querySelectorAll("button.job-h").forEach(b=>b.addEventListener("click",()=>{
-  const open=b.getAttribute("aria-expanded")!=="true";b.setAttribute("aria-expanded",open);$(b.getAttribute("aria-controls")).classList.toggle("open",open)}));
+  const open=b.getAttribute("aria-expanded")!=="true";b.setAttribute("aria-expanded",open);$(b.getAttribute("aria-controls")).classList.toggle("open",open);
+  if(!open&&$("lb").open)$("lb").close()}));
+
+/* event photo lightbox */
+const lb=$("lb");
+$("shot-open").addEventListener("click",()=>{try{lb.showModal()}catch(e){lb.setAttribute("open","")}});
+$("lb-x").addEventListener("click",()=>lb.close());
+lb.addEventListener("click",e=>{if(e.target===lb)lb.close()});
 
 /* copy email */
 $("copy").addEventListener("click",async()=>{const b=$("copy");
