@@ -122,7 +122,10 @@ nav .links a:hover,nav .links a.on{color:var(--ink);border-color:var(--acc)}
 .job-b .shot{opacity:0;transform:translateY(8px);transition:opacity .35s .1s,transform .35s .1s}
 .job-b.open .shot{opacity:1;transform:none}
 .lb{border:0;padding:0;background:transparent;max-width:min(1400px,94vw);max-height:92vh;overflow:visible}
-.lb::backdrop{background:rgba(6,12,20,.86)}
+.lb::backdrop{background:rgba(4,16,22,.35)}
+.scene{position:fixed;inset:-80px;z-index:50;pointer-events:none;opacity:0;transition:opacity .6s ease;
+  background:linear-gradient(rgba(4,16,22,.45),rgba(4,16,22,.7)),url(lavenue-full.jpg) center/cover;filter:blur(28px) saturate(1.2);transform:scale(1.15)}
+body.lb-on .scene{opacity:1}
 .lb img{display:block;max-width:100%;max-height:86vh;border-radius:14px}
 .lb-x{position:absolute;top:-52px;right:0;min-height:42px;padding:0 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,.6);background:rgba(6,19,26,.6);color:#fff;cursor:pointer;font-size:15px}
 
@@ -262,6 +265,7 @@ footer small{display:block;margin-top:44px;opacity:.65;font-size:13px}
 </section>
 </main>
 
+<div class="scene" aria-hidden="true"></div>
 <dialog class="lb" id="lb" aria-label="L'Avenue Experience photo">
   <img src="lavenue-full.jpg" alt="The crowd at a L'Avenue Experience event in Lisbon, hands raised under teal stage lights and haze" loading="lazy">
   <button type="button" class="lb-x" id="lb-x">Close</button>
@@ -325,7 +329,8 @@ document.querySelectorAll("button.job-h").forEach(b=>b.addEventListener("click",
 
 /* event photo lightbox */
 const lb=$("lb");
-$("shot-open").addEventListener("click",()=>{try{lb.showModal()}catch(e){lb.setAttribute("open","")}});
+$("shot-open").addEventListener("click",()=>{document.body.classList.add("lb-on");try{lb.showModal()}catch(e){lb.setAttribute("open","")}});
+lb.addEventListener("close",()=>document.body.classList.remove("lb-on"));
 $("lb-x").addEventListener("click",()=>lb.close());
 lb.addEventListener("click",e=>{if(e.target===lb)lb.close()});
 
